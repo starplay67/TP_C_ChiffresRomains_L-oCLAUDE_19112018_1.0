@@ -1,0 +1,271 @@
+Algorithme : ChiffresRomains
+
+//But
+	Créer un algorithme capable de demander à l'utilisateur s'il veut convertir un nombre arabe en nombre romain ou l'inverse, puis lui demander le nombre et le convertir.
+//Entrée(s) :
+	Nombre Romain ou Arabe
+//Sortie(s) :
+	Nombre Arabe ou Romain
+
+fonction RomConvert (NbRom:CHAINE) : ENTIER
+VAR
+	cpt:ENTIER;
+DEBUT
+ECRIRE "Entrez votre chiffre romain"
+LIRE NbRom
+POUR (cpt DE 1 A LONGUEUR(NbRom)) FAIRE
+	SI ((NbRom[cpt]='I') ET ((NbRom[cpt+1]<>'V')OU(NbRom[cpt+1]<>'X')OU(NbRom[cpt+1]<>'L')OU(NbRom[cpt+1]<>'C')OU(NbRom[cpt+1]<>'D')OU(NbRom[	cpt+1]<>'M'))) ALORS
+		RomConvert<-RomConvert+1;
+	SI ((NbRom[cpt]='V') ET ((NbRom[cpt+1]<>'X')OU(NbRom[cpt+1]<>'L')OU(NbRom[cpt+1]<>'C')OU(NbRom[cpt+1]<>'D')OU(NbRom[cpt+1]<>'M'))) ALORS
+	SI (NbRom[cpt-1]='I') ALORS
+		RomConvert<-RomConvert+4;
+	SINON
+		RomConvert<-RomConvert+5;	
+
+	SI ((NbRom[cpt]='X') ET ((NbRom[cpt+1]<>'L')OU(NbRom[cpt+1]<>'C')OU(NbRom[cpt+1]<>'D')OU(NbRom[cpt+1]<>'M'))) ALORS
+	SI (NbRom[cpt-1]='I') ALORS
+		RomConvert<-RomConvert+9;
+	SINON 
+		RomConvert<-RomConvert+10;
+
+	SI ((NbRom[cpt]='L') ET ((NbRom[cpt+1]<>'C')OU(NbRom[cpt+1]<>'D')OU(NbRom[cpt+1]<>'M'))) ALORS
+	SI (NbRom[cpt-1]='I') ALORS
+		RomConvert<-RomConvert+49;
+	SI (NbRom[cpt-1]='X') ALORS
+		RomConvert<-RomConvert+40;
+	SINON 
+		RomConvert<-RomConvert+50;
+
+	SI ((NbRom[cpt]='C') ET ((NbRom[cpt+1]<>'D')OU(NbRom[cpt+1]<>'M'))) ALORS
+	SI (NbRom[cpt-1]='I') ALORS
+		RomConvert<-RomConvert+99;
+	SINON SI (NbRom[cpt-1]='X') ALORS
+		RomConvert<-RomConvert+90;
+	SINON 
+		RomConvert<-RomConvert+100;
+
+	SI ((NbRom[cpt]='D') ET ((NbRom[cpt+1]<>'M'))) ALORS
+	SI (NbRom[cpt-1]='I') ALORS
+		RomConvert<-RomConvert+499;
+	SINON SI (NbRom[cpt-1]='X') ALORS
+		RomConvert<-RomConvert+490;
+	SINON SI (NbRom[cpt-1]='C') ALORS
+		RomConvert<-RomConvert+400;
+	SINON 
+		RomConvert<-RomConvert+500;
+
+	SI (NbRom[cpt]='M') ALORS
+	SI (NbRom[cpt-1]='I') ALORS
+		RomConvert<-RomConvert+999;
+	SINON SI (NbRom[cpt-1]='X') ALORS
+		RomConvert<-RomConvert+990;
+	SINON SI (NbRom[cpt-1]='C') ALORS
+		RomConvert<-RomConvert+900;
+	SINON 
+		RomConvert<-RomConvert+1000;
+
+FIN FONCTION
+
+PROCEDURE ConvertEnt
+VAR
+	NbRom:CHAINE
+	NbEnt:ENTIER
+	Mil,Cent,Diz,Unit:ENTIER
+	prev:ENTIER
+DEBUT
+	ECRIRE "Entrez votre entier"
+	LIRE NbEnt
+	Mil<-(NbEnt DIV 1000)
+	Cent<-((NbEnt DIV 1000) MOD 10)
+	Diz<-(((NbEnt DIV 1000) MOD 10) MOD 10)
+	Unit<-(NbEnt MOD 10)
+	CAS Mil PARMI
+		CAS 1:
+			NbRom[prev]<-"M"
+			prev<-prev+1
+		CAS 2:
+			NbRom[prev]<-"M"
+			prev<-prev+1
+			NbRom[prev]<-"M"
+			prev<-prev+1
+		CAS 3:
+			NbRom[prev]<-"M"
+			prev<-prev+1
+			NbRom[prev]<-"M"
+			prev<-prev+1
+			NbRom[prev]<-"M"
+			prev<-prev+1
+	FIN CAS PARMI
+	CAS Cent PARMI
+		CAS 1:
+			NbRom[prev]<-"C"
+			prev<-prev+1
+		CAS 2:
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+		CAS 3:
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+		CAS 4:
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"D"
+			prev<-prev+1
+		CAS 5:
+			NbRom[prev]<-"D"
+			prev<-prev+1
+		CAS 6:
+			NbRom[prev]<-"D"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+		CAS 7:
+			NbRom[prev]<-"D"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+		CAS 8:
+			NbRom[prev]<-"D"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+		CAS 9:
+			NbRom[prev]<-"C"
+			prev<-prev+1
+			NbRom[prev]<-"M"
+			prev<-prev+1
+		FIN CAS PARMI
+	CAS Diz PARMI
+		CAS 1:
+			NbRom[prev]<-"X"
+			prev<-prev+1
+		CAS 2:
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+		CAS 3:
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+		CAS 4:
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"L"
+			prev<-prev+1
+		CAS 5:
+			NbRom[prev]<-"L"
+			prev<-prev+1
+		CAS 6:
+			NbRom[prev]<-"L"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+		CAS 7:
+			NbRom[prev]<-"L"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+		CAS 8:
+			NbRom[prev]<-"L"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+		CAS 9:
+			NbRom[prev]<-"X"
+			prev<-prev+1
+			NbRom[prev]<-"C"
+			prev<-prev+1
+		FIN CAS PARMI
+	CAS Unit PARMI
+		CAS 1:
+			NbRom[prev]<-"I"
+			prev<-prev+1
+		CAS 2:
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+		CAS 3:
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+		CAS 4:
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"V"
+			prev<-prev+1
+		CAS 5:
+			NbRom[prev]<-"V"
+			prev<-prev+1
+		CAS 6:
+			NbRom[prev]<-"V"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+		CAS 7:
+			NbRom[prev]<-"V"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+		CAS 8:
+			NbRom[prev]<-"V"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"I"
+			prev<-prev+1
+		CAS 9:
+			NbRom[prev]<-"I"
+			prev<-prev+1
+			NbRom[prev]<-"X"
+			prev<-prev+1
+		FIN CAS PARMI
+	ECRIRE NbRom
+FIN PROCEDURE
+
+
+VAR 
+	choix : ENTIER
+	NbRom : CHAINE
+	NbArb : ENTIER
+DEBUT
+	ECRIRE "Tapez 1 pour une conversion de chiffres romains à arabes, 2 pour arabes à romains"
+	LIRE choix
+	SI (choix=1) ALORS
+		ECRIRE "Entrez votre chiffre romain"
+		LIRE NbRom
+		ECRIRE RomConvert(NbRom)
+	SINON SI (choix=2) ALORS
+		ECRIRE "Entrez votre chiffre arabe"
+		LIRE NbArb
+		ECRIRE ConvertEnt(NbEnt)
+FIN
